@@ -1,0 +1,252 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+
+require_once __DIR__ . '/model/dao/ConexaoBanco.php';
+require_once __DIR__ . '/model/dao/CidadaoDao.php';
+
+if(isset($_SESSION['userid'])){
+    $cidadaoDao = new CidadaoDao();
+    $id_login = $_SESSION['userid'];
+
+    if($cidadaoDao->consultarIDCidadaoExiste($id_login)){
+        $_SESSION['cadastrado'] = true;
+    }
+}
+$alerta = null;
+
+if(isset($_SESSION['alerta'])){
+    $alerta = $_SESSION['alerta'];
+    unset($_SESSION['alerta']);
+}
+}
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Acolhimento</title>
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+
+<body>
+    <?php if ($alerta): ?>
+            <script>
+                alert(<?php echo json_encode($alerta); ?>);
+            </script>
+    <?php endif; ?>
+
+    <header>
+
+        <img src="img/projeto-icon.png" alt="Logo: duas flores" class="logo">
+        <h1>Projeto Acolhimento</h1>
+        <p>Apoio e conscientização contra a violência doméstica</p>
+
+        <?php
+
+        $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : '';
+
+        if (isset($_SESSION['logado'])):
+            ?>
+            <div class="menu-boas-vindas">
+                <p>Bem-vinda! ** <?= $username ?> **</p>
+            </div>
+
+            <div class="menu_logout">
+                <a href="controller/logoutController.php" class="botao">Logout</a>      
+            </div>
+
+            <div class="menu-contato">
+                <a href="controller/ValidarCadastro.php" class="botao">Minha Conta</a>
+            </div>
+
+        <?php else: ?>
+            <div class="menu-login">
+                <a href="view/loginUsuario.php" class="botao">Login</a>
+            </div>
+
+            <div class="menu-cad">
+                <a href="view/cadastrarUsuario.php" class="botao">Cadastrar-se</a>
+            </div>
+
+        <?php endif; ?>
+
+    </header>
+
+    <nav>
+        <a href="#o-problema">O Problema</a>
+        <a href="#como-ajudar">Como Ajudar</a>
+        <a href="#centros">Centros</a>
+        <a href="#artigos">Artigos</a>
+    </nav>
+
+    <div class="container">
+
+
+        <section id="missao">
+            <div class="missao-container">
+                <div class="missao-texto">
+                    <h2>Nossa Missão</h2>
+                    <p>
+                        No Projeto Acolhimento, acreditamos que toda pessoa merece se sentir segura e ouvida.
+                        Nossa missão é oferecer apoio, orientação e um espaço de acolhimento para mulheres que enfrentam
+                        momentos difíceis. Estamos aqui para caminhar com você, oferecendo informação, cuidado e
+                        esperança.
+                    </p>
+                </div>
+                <div class="missao-img">
+                    <img src="img/imagem-principal.jpg" alt="Mulheres de mãos dadas em apoio a todas">
+                    <div class="credito">
+                        Foto por <a href="https://unsplash.com/pt-br/@hannahbusing" target="_blank"
+                            rel="noopener noreferrer">Hannah Busing</a> na
+                        <a href="https://unsplash.com/pt-br/fotografias/person-in-red-sweater-holding-babys-hand-Zyx1bK9mqmA"
+                            target="_blank" rel="noopener noreferrer">Unsplash</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        </section>
+
+        <section id="o-problema">
+            <h2>O Problema da Violência Doméstica</h2>
+            <div class="intro-text">
+                <p>A violência doméstica vai muito além de um simples conflito familiar. Ela acontece quando uma mulher
+                    sofre qualquer forma de agressão ou abuso, seja físico, psicológico, sexual, moral ou até
+                    financeiro, dentro do espaço que deveria ser o mais seguro: sua própria casa.
+                    Esse tipo de violência deixa marcas profundas, não apenas nas vítimas, mas também em toda a
+                    sociedade. Reconhecer esse problema é o primeiro passo para construir uma rede de apoio mais forte e
+                    para lembrar a cada mulher que ela não está sozinha.</p>
+            </div>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Impactos Sociais</h3>
+                    <p>Causa isolamento social, danos severos à saúde física e mental das vítimas e a perpetuação do
+                        ciclo da violência.</p>
+                </div>
+                <div class="card">
+                    <h3>Principais Afetados</h3>
+                    <p>O principal grupo afetado são as mulheres, mas também inclui crianças, que podem sofrer traumas e
+                        desenvolver problemas futuros ao vivenciar a violência em casa.</p>
+                </div>
+                <div class="card">
+                    <h3>Tipos de Violência</h3>
+                    <p>Pode ser física, psicológica, sexual, patrimonial e moral.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="como-ajudar">
+            <h2>Canais de Ajuda e Apoio</h2>
+            <div class="intro-text">
+                <p>Existem canais de denúncia e serviços de apoio para as vítimas de violência. Denunciar é o primeiro
+                    passo para combater o problema e salvar vidas.</p>
+            </div>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Ligue 180</h3>
+                    <p>Central de Atendimento à Mulher, um serviço de utilidade pública gratuito e confidencial que
+                        orienta sobre os direitos e os serviços disponíveis para as vítimas de violência.</p>
+                    <a href="https://www.gov.br/mulheres/pt-br/ligue180" target="_blank">Mais informações</a>
+                </div>
+                <div class="card">
+                    <h3>Casas da Mulher Brasileira</h3>
+                    <p>Oferecem serviços integrados de atendimento humanizado e especializado, incluindo delegacia,
+                        juizado e promotoria no mesmo local.</p>
+                    <a href="https://www.gov.br/mulheres/pt-br/acesso-a-informacao/acoes-e-programas/casa-da-mulher-brasileira"
+                        target="_blank">Mais informações</a>
+                </div>
+                <div class="card">
+                    <h3>Apoio Psicológico</h3>
+                    <p>Apoio psicológico pode ser oferecido por meio de sites e projetos, o que pode ajudar a vítima a
+                        recomeçar a vida e sair da dependência do agressor.</p>
+                </div>
+            </div>
+            <a href="view/cadastroVoluntario.php" class="contact-button" id="cadastro-voluntario">Seja voluntário(a)</a>
+        </section>
+
+        <section id="centros">
+            <div class="centro-card">
+                <h3>Centro de Atendimento à Mulher Vítima de Violência</h3>
+                <p>O Centro de Atendimento às Mulheres Vítimas de Violência Doméstica oferece suporte psicológico,
+                    jurídico e social para mulheres em situação de risco.</p>
+                <ul>
+                    <li>Atendimento espontâneo ou encaminhado por Delegacia da Mulher ou Defensoria Pública.</li>
+                    <li>Possibilidade de abrigo sigiloso para mulheres em risco, com direito a levar filhos menores.
+                    </li>
+                    <li>Suporte jurídico para pensão, bolsa alimentícia e medidas protetivas.</li>
+                    <li>Acompanhamento contínuo até que a mulher esteja segura e independente do agressor.</li>
+                    <li>Casas Clara Maria oferecem oficinas e atividades comunitárias para apoio e integração.</li>
+                </ul>
+                <blockquote>“Nosso objetivo é garantir proteção, cuidado e apoio para que cada mulher possa reconstruir
+                    sua vida com dignidade e autonomia.”</blockquote>
+                <a href="https://www.guarulhos.sp.gov.br/categories/politicas-para-mulheres" target="_blank">Mais
+                    informações</a>
+                <a href="controller/ValidarCadastro.php" class="contact-button" id="cadastro-vitima">Pedir ajuda</a>
+            </div>
+
+        </section>
+
+        <section id="artigos">
+            <h2>Artigos e Políticas Públicas</h2>
+            <div class="artigo-card">
+                <h3>Políticas Públicas de Enfrentamento à Violência contra Mulheres</h3>
+                <p>A Política Nacional de Enfrentamento à Violência contra as Mulheres define ações do governo
+                    brasileiro para prevenir, proteger e responsabilizar em casos de violência. As medidas incluem
+                    campanhas de conscientização, atendimento especializado, aplicação da Lei Maria da Penha, integração
+                    institucional e coleta de dados para orientar políticas públicas.</p>
+                <blockquote>“O objetivo é proteger mulheres, prevenir novas ocorrências e promover a igualdade de gênero
+                    na sociedade brasileira.”</blockquote>
+                <a href="https://www.gov.br/mdh/pt-br/navegue-por-temas/politicas-para-mulheres/arquivo/arquivos-diversos/sev/pacto/documentos/politica-nacional-enfrentamento-a-violencia-versao-final.pdf"
+                    target="_blank">Leia mais</a>
+            </div>
+
+            <div class="artigo-card">
+                <h3>Lei Maria da Penha (Lei 11.340/2006)</h3>
+                <p>A Lei Maria da Penha é uma legislação brasileira que protege mulheres contra violência doméstica e
+                    familiar. Ela estabelece medidas preventivas, garante atendimento especializado às vítimas, prevê
+                    medidas protetivas de urgência e responsabiliza os agressores, fortalecendo a rede de proteção às
+                    mulheres.</p>
+                <blockquote>“A lei é um marco na proteção das mulheres e busca assegurar sua segurança, integridade
+                    física e psicológica.”</blockquote>
+                <a href="https://www.institutomariadapenha.org.br/lei-11340/resumo-da-lei-maria-da-penha.html"
+                    target="_blank">Leia mais</a>
+
+                <div class="artigo-card">
+                    <h3>A Violência Doméstica e a Efetividade da Lei Maria da Penha</h3>
+                    <p>O artigo analisa criticamente a Lei Maria da Penha (Lei 11.340/2006), mostrando avanços na
+                        proteção das mulheres vítimas de violência doméstica, mas também destacando desafios na sua
+                        aplicação, como demora no atendimento e lacunas nas medidas protetivas.</p>
+                    <blockquote>“A lei é um avanço histórico, mas ainda depende de efetiva implementação para
+                        transformar a realidade das mulheres vítimas de violência.”</blockquote>
+                    <a href="https://jus.com.br/artigos/111196/a-violencia-domestica-e-a-efetividade-da-lei-maria-da-penha-uma-analise-critica#google_vignette"
+                        target="_blank">Leia mais</a>
+                </div>
+
+            </div>
+
+
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Projeto Acolhimento. Todos os direitos reservados.</p>
+            <div class="protection-links">
+                <a href="https://www.institutomariadapenha.org.br" target="_blank">Instituto Maria da Penha</a> |
+                <a href="https://www.justiceiras.org.br" target="_blank">Projeto Justiceiras</a> |
+                <a href="https://www.mapadoacolhimento.org" target="_blank">Mapa do Acolhimento</a> |
+                <a href="tel:180">Ligue 180</a> |
+                <a href="https://www.gov.br/mulheres/pt-br/assuntos/violencia-contra-a-mulher/canais-de-denuncia"
+                    target="_blank">Canais de Denúncia</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
