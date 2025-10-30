@@ -299,7 +299,9 @@ if (isset($_SESSION['alerta'])) {
                                         </option>
                                 </select>
                         </div>
-                        <button type="submit" name="acao" value="Incluir">Salvar Dados</button>
+                        <div class="botoes">
+                                <button type="submit" name="acao" value="Incluir">Salvar Dados</button>
+                        </div>
 
                 </form><br><br>
 

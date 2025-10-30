@@ -176,7 +176,9 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
                                 </option>
                         </select>
                 </div>
-                <button type="submit" name="acao" value="Incluir">Salvar Nova Ocorrencia</button>
+                <div class="botoes">
+                        <button type="submit" name="acao" value="Incluir">Salvar Nova Ocorrencia</button>
+                </div>
                 
         </form><br><br>
 

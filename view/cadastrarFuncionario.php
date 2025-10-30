@@ -1,5 +1,4 @@
 <?php
-
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -11,20 +10,14 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] !== "Administr
         header('location: ../index.php');
         exit;
 }
-$username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : '';
-
 $mensagem = '';
 
 if (isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
     $mensagem = $_SESSION['msg'];
     unset($_SESSION['msg']);
 }
-$alerta = null;
 
-if (isset($_SESSION['alerta'])) {
-    $alerta = $_SESSION['alerta'];
-    unset($_SESSION['alerta']);
-}
+$username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : '';
 
 ?>
 <!DOCTYPE html>
@@ -41,11 +34,6 @@ if (isset($_SESSION['alerta'])) {
 </head>
 
 <body>
-    <?php if ($alerta): ?>
-        <script>
-            alert(<?php echo json_encode($alerta); ?>);
-        </script>
-    <?php endif; ?>
     <header>
         <img src="../img/projeto-icon.png" alt="Logo: duas flores" class="logo">
         <h1>Projeto Acolhimento</h1>
@@ -69,7 +57,44 @@ if (isset($_SESSION['alerta'])) {
             <a href="">Consultar Vitimas</a>
             <a href="cadastrarFuncionario.php">Cadsastrar Funcionario</a>
         </nav>
-        
+
+        <form action="../controller/FuncionarioController.php" method="POST">
+            <?php if ($mensagem)
+                echo "<p style='color:red;'>$mensagem</p>"; ?>
+            <h2>Cadastro de Funcionário</h2>
+
+
+            <div class="form-group">
+                <label for="nome">Nome completo:</label>
+                <input type="text" id="nome" name="nome">
+            </div>
+            <div class="form-group">
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf">
+            </div>
+            <div class="form-group">
+                <label for="matricula">Matricula:</label>
+                <input type="text" id="matricula" name="matricula">
+            </div>
+            <div class="form-group">
+                <label for="cargo">Cargo:</label>
+                <input type="text" id="cargo" name="cargo">
+            </div>
+            <div class="form-group">
+                <label for="usuario">Usuario/Login:</label>
+                <input type="text" id="usuario" name="usuario" placeholder="Usuario que o agente cadastrou - ex: Agente@123">
+            </div>
+
+
+            <div class="section-header">
+
+                <div class="botoes">
+                    <button type="submit" name="acao" value="Incluir">Salvar Dados</button>
+                </div>
+            </div>
+
+        </form><br><br>
+
     </main>
     <footer>
         <div class="footer-content">

@@ -185,7 +185,10 @@ $qtd_filhos_menores = $vitima_completa["qtd_filhos_menores"];
                         <label for="qtd_filho">Quantos filhos Menores de Idade?</label>
                         <input type="number" id="qtd_filho" name="qtd_filho" value="<?= $qtd_filhos_menores ?>">
                 </div>
-                <button type="submit" name="acao" value="Alterar">Salvar Alteração</button>
+                <div class="botoes">
+                    <button type="submit" name="acao" value="Alterar">Salvar Alteração</button>
+                </div>
+                
 
         </div><br><br>
 

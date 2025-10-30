@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 }
             }else{
 
-                $_SESSION['msg'] = "Usuario ou Senha Encontrado!";
+                $_SESSION['msg'] = "Usuario ou Senha não Encontrado!";
             }
             header('location: ../view/loginUsuario.php');
             exit;
