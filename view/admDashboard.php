@@ -7,7 +7,7 @@ if (!isset($_SESSION['logado'])) {
     header('location: ../index.php');
     exit;
 }
-if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] !== "Administrador") {
+if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === "Vitima") {
         header('location: ../index.php');
         exit;
 }
@@ -67,7 +67,13 @@ if (isset($_SESSION['alerta'])) {
         <nav>
             <a href="admDashboard.php">Dashboard</a>
             <a href="">Consultar Vitimas</a>
-            <a href="cadastrarFuncionario.php">Cadsastrar Funcionario</a>
+            <?php
+            if($_SESSION['tipo_usuario'] === "Administrador"): ?>
+            
+            <a href="cadastrarFuncionario.php">Cadsastrar Funcionario</a>"
+
+            <?php endif ?>
+            
         </nav>
         
     </main>

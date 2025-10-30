@@ -8,7 +8,7 @@ if (!isset($_SESSION['logado'])) {
         header('location: ../index.php');
         exit;
 }
-if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === "Administrador") {
+if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] !== "Vitima") {
         header('location: admDashboard.php');
         exit;
 } else {
