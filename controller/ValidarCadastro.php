@@ -10,7 +10,11 @@ if(!isset($_SESSION['logado'])){
 require_once __DIR__ . '/../model/dao/ConexaoBanco.php';
 require_once __DIR__ . '/../model/dao/CidadaoDao.php';
 
- 
+if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] !== "Vitima") {
+        $_SESSION['alerta'] = "Bem-vindo ao Dashboard!";
+        header('location: ../view/perfilusuario.php');
+        
+} else {
 
 if(isset($_SESSION['userid'])){
     $cidadaoDao = new CidadaoDao();
@@ -28,5 +32,5 @@ if(isset($_SESSION['userid'])){
     }
 }
 
-
+}
 

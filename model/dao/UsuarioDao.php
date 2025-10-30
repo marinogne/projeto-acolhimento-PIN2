@@ -85,7 +85,22 @@ class UsuarioDao
             $stmt->store_result();
             $existe = $stmt->num_rows > 0;
             $stmt->close();
-            return $existe; // Retorna true se já existir
+            return $existe;
+        }
+        return false;
+    }
+
+    public function alterarTipoUsuario($usuario, $tipo_usuario)
+    {
+        $sql = "UPDATE usuario SET tipo_usuario = ? WHERE id_usuario = ?";
+        if ($stmt = $this->conexao->prepare($sql)) {
+            $stmt->bind_param('ss', $tipo_usuario,$usuario->getIdUsuario());
+
+            if ($stmt->execute()) {
+                $linhas_afetadas = $stmt->affected_rows;
+                $stmt->close();
+                return $linhas_afetadas > 0;
+            }
         }
         return false;
     }

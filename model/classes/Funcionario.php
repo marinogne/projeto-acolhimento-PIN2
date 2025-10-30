@@ -7,19 +7,17 @@ class Funcionario {
     protected $nome;
     protected $cargo;
     protected $cpf;
+    protected $id_login;
 
     
-    public function __construct($idFuncionario, $matricula, $nome, $cargo, $cpf) {
+    public function __construct($idFuncionario, $matricula, $nome, $cargo, $cpf, $id_login) {
         $this->idFuncionario = $idFuncionario;
         $this->matricula = $matricula;
         $this->nome = $nome;
         $this->cargo = $cargo;
         $this->cpf = $cpf;
+        $this->id_login = $id_login;
     }
-
-    // ------------------------------------------------------------------
-    // GETTERS
-    // ------------------------------------------------------------------
 
     public function getIdFuncionario(){
         return $this->idFuncionario;
@@ -40,10 +38,9 @@ class Funcionario {
     public function getCpf(){
         return $this->cpf;
     }
-
-    // ------------------------------------------------------------------
-    // SETTERS
-    // ------------------------------------------------------------------
+    public function getIdLogin(){
+        return $this->id_login;
+    }
 
     public function setIdFuncionario($idFuncionario){
         $this->idFuncionario = $idFuncionario;
@@ -61,7 +58,11 @@ class Funcionario {
         $this->cargo = $cargo;
     }
 
-    public function setCpf(float $cpf){
+    public function setCpf($cpf){
         $this->cpf = $cpf;
     }
+    public function setIdLogin($id_login){
+        $this->id_login = $id_login;
+    }
+    
 }

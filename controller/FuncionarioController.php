@@ -1,53 +1,55 @@
 <?php
 
-include_once ('../model/classes/Funcionario.php');
-include_once('../model/dao/FuncionarioDao.php'); 
-include_once ('../controller/Data.php');
+include_once('../model/classes/Funcionario.php');
+include_once('../model/classes/Usuario.php');
+include_once('../model/dao/FuncionarioDao.php');
+include_once('../model/dao/UsuarioDao.php');
 
 session_start();
 
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["acao"]) && $_POST["acao"] === "Incluir") {
+    
+    $matricula = filter_input(INPUT_POST, 'matricula', FILTER_SANITIZE_SPECIAL_CHARS);
+    $nome      = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
+    $cargo     = filter_input(INPUT_POST, 'cargo', FILTER_SANITIZE_SPECIAL_CHARS);
+    $cpf       = filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_SPECIAL_CHARS);
+    $usuario   = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_SPECIAL_CHARS);
 
+    if (!$matricula || !$nome || !$cargo || !$cpf || !$usuario) {
+        $_SESSION['msg'] = "Erro: Todos os campos são obrigatórios.";
+    } else {
+        
+        $funcionarioDao = new FuncionarioDao();
+        
+        if ($funcionarioDao->verificarDuplicidade($matricula, $cpf)) {
+            $_SESSION['msg'] = "Erro: Já existe um funcionário cadastrado com esta Matrícula ou CPF.";
+            header("Location: ../view/cadastrarFuncionario.php");
+            exit();
+        }
+        
+        $usuarioDao = new UsuarioDao();
+        $usuario_existente = $usuarioDao->verificarLogin($usuario);
+        
+        if ($usuario_existente) {
+            $id_login = $usuario_existente->getIdUsuario();
 
-extract($_REQUEST, EXTR_SKIP);
-
-if (isset($acao)) {
-
-    if ($acao == "Incluir") {
-        if (isset($idFuncionario)&&  isset($matricula)&& isset($nome) && isset($cargo)&& isset($cpf)) {
+            $funcionario = new Funcionario(
+                null, $matricula, $nome, $cargo, $cpf, $id_login
+            );
             
-            $idFuncionario = htmlspecialchars_decode
-            (strip_tags($idFuncionario));
-            $matricula = htmlspecialchars_decode
-            (strip_tags($matricula));
-            $nome = htmlspecialchars_decode
-            (strip_tags($nome));
-            $cargo = htmlspecialchars_decode
-            (strip_tags($cargo));
-            $cpf = htmlspecialchars_decode
-            (strip_tags($cpf));
-            if($idFuncionario && $matricula && $nome && $cargo && $cpf){
-               
-                if (is_string($nome) && is_string($cargo)) {
-                    $funcionario= new Funcionario (null,
-                    $matricula, $nome, $cargo, $cpf);
+            if ($funcionarioDao->inserirFuncionario($funcionario)) {
+                $usuarioDao->alterarTipoUsuario($usuario_existente, 'Funcionario');
+                $_SESSION['msg'] = "Novo Funcionario cadastrado com sucesso!";
+            } else {
+                $_SESSION['msg'] = "Falha ao inserir o Funcionário no banco de dados.";
+            }
 
-          
-            
-                    $funcionarioDao = new FuncionarioDao ();
-
-
-                    if($funcionarioDao->incluirFuncionario ($porteiro)){
-                        $_SESSION['msg'] = "\n" ."Novo Funcionario cadastrado com sucesso !!";
-                        $_SESSION['tipo'] = "sucesso";     
-                    } else {
-                        $_SESSION['msg'] =  "\n" ."Falha no INSERT!";
-                        $_SESSION['tipo'] = "erro";
-                    }
-   }
-      }
-    }   
+        } else {
+            $_SESSION['msg'] = "Erro: Usuário de login ('$usuario') não encontrado na base de usuários.";
+        }
     }
-    $path = $_SERVER['HTTP_REFERER'];
-    header("Location: $path");  
-    exit(); 
+
+    header("Location: ../view/cadastrarFuncionario.php");
+    exit();
 }
+
