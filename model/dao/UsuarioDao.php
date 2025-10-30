@@ -85,7 +85,7 @@ class UsuarioDao
             $stmt->store_result();
             $existe = $stmt->num_rows > 0;
             $stmt->close();
-            return $existe; // Retorna true se já existir
+            return $existe;
         }
         return false;
     }
