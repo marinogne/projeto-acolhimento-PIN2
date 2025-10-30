@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Tempo de geração: 21/10/2025 às 22:27
--- Versão do servidor: 10.4.28-MariaDB
--- Versão do PHP: 8.2.4
+-- Host: 127.0.0.1
+-- Tempo de geração: 30/10/2025 às 19:46
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,8 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `administrador` (
-  `IdAdministrador` int(20) NOT NULL,
-  `nome` varchar(50) NOT NULL
+  `IdAdministrador` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -85,8 +84,21 @@ INSERT INTO `cidadao` (`id_cidadao`, `nome`, `cpf`, `data_nasci`, `telefone`, `e
 --
 
 CREATE TABLE `funcionario` (
-  `idFuncionario` int(20) NOT NULL
+  `idFuncionario` int(20) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `cpf` varchar(14) NOT NULL,
+  `matricula` varchar(50) NOT NULL,
+  `cargo` varchar(20) NOT NULL,
+  `id_usuario` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `funcionario`
+--
+
+INSERT INTO `funcionario` (`idFuncionario`, `nome`, `cpf`, `matricula`, `cargo`, `id_usuario`) VALUES
+(1, 'nome', 'cpf', 'matricula', 'cargo', 9),
+(3, 'Funcionario IFSP', '123123123', '00001', 'Funcionario do IFSP', 8);
 
 -- --------------------------------------------------------
 
@@ -114,9 +126,10 @@ CREATE TABLE `ocorrencia` (
 --
 
 INSERT INTO `ocorrencia` (`id_ocorrencia`, `id_vitima`, `id_agressor`, `relacao_com_agressor`, `tempo_relacao`, `tipo_violencia`, `primeira_agressao`, `detalhe_violencia`, `testemunhas`, `boletim_ocorrencia`, `medida_protetiva`, `agressor_antecedentes`) VALUES
-(1, 4, 2, 'Ex-marido', '10 anos', 'Física,Verbal', 'sim', 'Detalhes do Teste', 'Sim_Filhos', 'nao', 'Solicitada', 'nao'),
+(1, 4, 2, 'Ex-marido', '10 anos', 'fisica,verbal,psicologica', 'sim', 'Detalhes do Teste', 'Sim_Filhos', 'nao', 'Solicitada', 'nao'),
 (2, 5, 3, 'Ex-Companheiro', '5 anos', 'psicologica,sexual', 'nao', 'Agressão física ocorreu após discussão sobre finanças. Ameaças são constantes.', 'sim_outros', 'sim', 'nao', 'sim'),
-(4, 8, 5, 'namorado', '2 meses', 'verbal,psicologica', 'nao', '', 'sim_outros', 'nao', 'sim', 'nao_sei');
+(4, 8, 5, 'namorado', '2 meses', 'verbal,psicologica', 'nao', '', 'sim_outros', 'nao', 'sim', 'nao_sei'),
+(5, 4, 2, 'teste', '2 anos', 'fisica,verbal', 'sim', 'Detalhes do Teste', 'Sim_Filhos', 'nao', 'Solicitada', 'nao');
 
 -- --------------------------------------------------------
 
@@ -139,7 +152,8 @@ INSERT INTO `usuario` (`id_usuario`, `usuario`, `senha`, `tipo_usuario`) VALUES
 (1, 'teste', '$2y$10$DkODJnUvl0qlNl3SMpxfdu4yZ1pGC5B.bZWI7wQ7G0l0LM0dZi9Ve', 'Vitima'),
 (5, 'teste5', '$2y$10$1mLOoCUGfyFA3X0VYxxBDeRchpfQr6ACAopTSJyXEA7Tivk/0nPyC', 'Vitima'),
 (7, 'teste2', '$2y$10$da14Hu1pZ3L0XtVj2D/32eWIIgK21qpbdMSlxsro8BIp95fVjTLrm', 'Vitima'),
-(8, 'IFSP', '$2y$10$ORX51A6vR2qHJCvIwl.dE.OG3.RlmKQ/xdtsz7srXzUhNvqZaoume', 'Vitima');
+(8, 'IFSP', '$2y$10$ORX51A6vR2qHJCvIwl.dE.OG3.RlmKQ/xdtsz7srXzUhNvqZaoume', 'Funcionario'),
+(9, 'admin', '$2y$10$OqQkk9QDqntDe4TwSzYAm.MSaWFWMicHvgYi40IbtNC.Jp1R5Z6ma', 'Administrador');
 
 -- --------------------------------------------------------
 
@@ -164,7 +178,7 @@ CREATE TABLE `vitima` (
 --
 
 INSERT INTO `vitima` (`id_cidadao`, `etnia`, `possui_renda`, `recebe_auxilio`, `trabalha`, `escolaridade`, `possui_filhos`, `qtd_filhos_menores`, `nome_mae`) VALUES
-(4, 'sem_declaracao', 'nao', 'nao', 'nao', 'fundamental_incompleto', 'sim', 11, 'Mãe da Maria'),
+(4, '', 'nao', 'nao', 'nao', 'fundamental_incompleto', 'sim', 11, 'Mãe da Maria'),
 (5, 'parda', 'sim', 'nao', 'sim', 'medio_completo', 'sim', 2, 'Maria das Dores Silva'),
 (8, 'indigena', 'nao', 'nao', 'nao', 'pos_graduacao', 'nao', 0, 'Doguinha Dog');
 
@@ -175,23 +189,10 @@ INSERT INTO `vitima` (`id_cidadao`, `etnia`, `possui_renda`, `recebe_auxilio`, `
 --
 
 CREATE TABLE `voluntario` (
-  `idVoluntario` int(11) NOT NULL,
-  `nome` varchar(120) NOT NULL,
-  `email` varchar(120) NOT NULL,
-  `telefone` varchar(30) NOT NULL,
-  `disponibilidade` varchar(30) NOT NULL,
-  `areas` text NOT NULL
+  `idVoluntario` int(20) NOT NULL,
+  `servicoPrestado` int(11) NOT NULL,
+  `dataInscricao` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `voluntario`
---
-
-INSERT INTO `voluntario` (`idVoluntario`, `nome`, `email`, `telefone`, `disponibilidade`, `areas`) VALUES
-(1, 'Jose', 'jose@gmail.com', '1100090909', 'Tarde', 'Apoio psicológico'),
-(2, 'aaa', 'aaa@gmail.com', '112222222', 'Noite', 'Apoio psicológico'),
-(3, 'Teste Teste', 'teste@gmail.com', '11000200020', 'Tarde', 'Apoio jurídico'),
-(4, 'Teste', 'teste1@gmail.com', '11000200020', 'Tarde', 'Divulgação');
 
 --
 -- Índices para tabelas despejadas
@@ -221,7 +222,8 @@ ALTER TABLE `cidadao`
 -- Índices de tabela `funcionario`
 --
 ALTER TABLE `funcionario`
-  ADD PRIMARY KEY (`idFuncionario`);
+  ADD PRIMARY KEY (`idFuncionario`),
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
 -- Índices de tabela `ocorrencia`
@@ -248,8 +250,7 @@ ALTER TABLE `vitima`
 -- Índices de tabela `voluntario`
 --
 ALTER TABLE `voluntario`
-  ADD PRIMARY KEY (`idVoluntario`),
-  ADD UNIQUE KEY `uq_voluntario_email` (`email`);
+  ADD PRIMARY KEY (`idVoluntario`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
@@ -268,22 +269,22 @@ ALTER TABLE `cidadao`
   MODIFY `id_cidadao` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT de tabela `funcionario`
+--
+ALTER TABLE `funcionario`
+  MODIFY `idFuncionario` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de tabela `ocorrencia`
 --
 ALTER TABLE `ocorrencia`
-  MODIFY `id_ocorrencia` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_ocorrencia` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT de tabela `voluntario`
---
-ALTER TABLE `voluntario`
-  MODIFY `idVoluntario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_usuario` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restrições para tabelas despejadas
@@ -294,6 +295,12 @@ ALTER TABLE `voluntario`
 --
 ALTER TABLE `cidadao`
   ADD CONSTRAINT `cidadao_ibfk_1` FOREIGN KEY (`id_login`) REFERENCES `usuario` (`id_usuario`);
+
+--
+-- Restrições para tabelas `funcionario`
+--
+ALTER TABLE `funcionario`
+  ADD CONSTRAINT `funcionario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
 
 --
 -- Restrições para tabelas `ocorrencia`
