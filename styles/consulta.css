@@ -74,27 +74,6 @@ body {
   box-shadow: 0 0 0 3px rgba(124,77,158,0.20);
 }
 
-.btn {
-  border: 0;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: 900;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.10);
-}
-
-.btn:active { transform: translateY(1px); }
-
-.btn-buscar {
-  background-color: #7C4D9E;
-  color: #fff;
-}
-
-.btn-limpar {
-  background-color: #D9C5E3;
-  color: #7C4D9E;
-}
-
 .resultados-header {
   display: flex;
   justify-content: space-between;
@@ -156,13 +135,3 @@ body {
 .tabela tbody tr:hover {
   background-color: #FAF6FD; 
 }
-
-.acoes {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.btn-ver   { background-color: #F7E9E0; color: #7C4D9E; border: 1px solid #EED6CD; }
-.btn-editar{ background-color: #D9C5E3; color: #7C4D9E; }
-.btn-excluir{ background-color: #e91e63; color: #fff; }
