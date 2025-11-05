@@ -5,10 +5,10 @@ require_once('../model/Classes/Vitima.php');
 
 session_start();
 
-if (!isset($_SESSION['usuario_logado'])) {
+//if (!isset($_SESSION['logado'])) {
     header('location: loginUsuario.php');
     exit;
-}
+//}
 $tipo_usuario = $_SESSION['tipo_usuario'];
 
 $listaVitimas = $_SESSION['lista_vitimas'] ?? [];
@@ -30,6 +30,7 @@ if (isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
 $temResultados = !empty($listaVitimas);
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -42,14 +43,7 @@ $temResultados = !empty($listaVitimas);
 </head>
 
 <body>
-    <main> <div class="content">
-            <?php if (!empty($mensagem)): ?>
-                <div class="msg <?php echo $tipo_mensagem; ?>">
-                    <p><?php echo $mensagem; ?></p>
-                </div>
-            <?php endif; ?>
-        </div>
-        
+    <main> 
         <?php
         switch ($tipo_usuario):
             
@@ -80,65 +74,73 @@ $temResultados = !empty($listaVitimas);
         endswitch;
         ?>  
 
-        <hr>
-        
-        <div class="container tabela">
-            <h1>Resultados da Consulta</h1>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>ID Cidadao</th>
-                    <th>Nome</th>
-                    <th>CPF</th>
-                    <th>Data Nascimento</th>
-                    <th>Telefone</th>
-                    <th>Endereço</th>
-                    <th>ID Login</th>
-                    <th>Etinia</th>
-                    <th>Possui Renda</th>
-                    <th>Recebe Auxilio</th>
-                    <th>Trebalha</th>
-                    <th>Escolaridade</th>
-                    <th>Nome Mãe</th>
-                    <th>Possui Filhos</th>
-                    <th>Qtd Filhos Menores</th>
-                </tr>
-            </thead>
-                        
-            <tbody>
-
-                <?php if ($temResultados): ?>
-                    <?php foreach ($listaVitimas as $vitima): ?>
-                        <tr>
-                            <td><?php echo $vitima['id_cidadao']; ?></td>
-                            <td><?php echo $vitima['nome']; ?></td>
-                            <td><?php echo $vitima['cpf']; ?></td>
-                            <td><?php echo $vitima['data_nascimento']; ?></td>
-                            <td><?php echo $vitima['telefone']; ?></td>
-                            <td><?php echo $vitima['endereco']; ?></td>
-                            <td><?php echo $vitima['id_login']; ?></td>
-                            <td><?php echo $vitima['etnia']; ?></td>
-                            <td><?php echo $vitima['possuiRenda'] ?? $vitima['possui_renda']; ?></td> <td><?php echo $vitima['recebeAuxilio'] ?? $vitima['recebe_auxilio']; ?></td>
-                            <td><?php echo $vitima['trabalha']; ?></td>
-                            <td><?php echo $vitima['escolaridade']; ?></td> 
-                            <td><?php echo $vitima['nomeMae'] ?? $vitima['nome_mae']; ?></td>
-                            <td><?php echo $vitima['possuiFilhos'] ?? $vitima['possui_filhos']; ?></td>
-                            <td><?php echo $vitima['qtdFilhosMenores'] ?? $vitima['qtd_filhos_menores']; ?></td>
-                            
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="15" style="text-align: center;">
-                            Nenhuma vítima encontrada.
-                        </td>
-                    </tr>
+        <div class="main-content-right">
+            <div class="content">
+                <?php if (!empty($mensagem)): ?>
+                    <div class="msg <?php echo $tipo_mensagem; ?>">
+                        <p><?php echo $mensagem; ?></p>
+                    </div>
                 <?php endif; ?>
-            </tbody>
-        </table>
-        </div>
+            </div>
             
+            
+            <div class="container tabela">
+                <h1>Resultados da Consulta</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Cidadao</th>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Data Nascimento</th>
+                        <th>Telefone</th>
+                        <th>Endereço</th>
+                        <th>ID Login</th>
+                        <th>Etinia</th>
+                        <th>Possui Renda</th>
+                        <th>Recebe Auxilio</th>
+                        <th>Trebalha</th>
+                        <th>Escolaridade</th>
+                        <th>Nome Mãe</th>
+                        <th>Possui Filhos</th>
+                        <th>Qtd Filhos Menores</th>
+                    </tr>
+                </thead>
+                            
+                <tbody>
+
+                    <?php if ($temResultados): ?>
+                        <?php foreach ($listaVitimas as $vitima): ?>
+                            <tr>
+                                <td><?php echo $vitima['id_cidadao']; ?></td>
+                                <td><?php echo $vitima['nome']; ?></td>
+                                <td><?php echo $vitima['cpf']; ?></td>
+                                <td><?php echo $vitima['data_nascimento']; ?></td>
+                                <td><?php echo $vitima['telefone']; ?></td>
+                                <td><?php echo $vitima['endereco']; ?></td>
+                                <td><?php echo $vitima['id_login']; ?></td>
+                                <td><?php echo $vitima['etnia']; ?></td>
+                                <td><?php echo $vitima['possuiRenda'] ?? $vitima['possui_renda']; ?></td> <td><?php echo $vitima['recebeAuxilio'] ?? $vitima['recebe_auxilio']; ?></td>
+                                <td><?php echo $vitima['trabalha']; ?></td>
+                                <td><?php echo $vitima['escolaridade']; ?></td> 
+                                <td><?php echo $vitima['nomeMae'] ?? $vitima['nome_mae']; ?></td>
+                                <td><?php echo $vitima['possuiFilhos'] ?? $vitima['possui_filhos']; ?></td>
+                                <td><?php echo $vitima['qtdFilhosMenores'] ?? $vitima['qtd_filhos_menores']; ?></td>
+                                
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="15" style="text-align: center;">
+                                Nenhuma vítima encontrada.
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+            </div>
+        </div>
     </main>
 
 </body>

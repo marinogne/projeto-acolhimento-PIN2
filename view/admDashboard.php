@@ -28,14 +28,13 @@ if (isset($_SESSION['alerta'])) {
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Usuario</title>
-    <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="../styles/forms.css">
+    <link rel="stylesheet" href="../styles/adm.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
@@ -52,7 +51,7 @@ if (isset($_SESSION['alerta'])) {
         <p>Apoio e conscientização contra a violência doméstica</p>
 
         <div class="menu-boas-vindas">
-            <p>Bem-vinda! ** <?= $username ?> **</p>
+            <p>Acessado,  <?= $username ?> </p>
         </div>
 
         <div class="menu_logout">
@@ -65,12 +64,12 @@ if (isset($_SESSION['alerta'])) {
     </header>
     <main>
         <nav>
-            <a href="admDashboard.php">Dashboard</a>
-            <a href="">Consultar Vitimas</a>
+            <a href="consultarVitima.php">Consultar Vitimas</a>
+            
             <?php
             if($_SESSION['tipo_usuario'] === "Administrador"): ?>
             
-            <a href="cadastrarFuncionario.php">Cadsastrar Funcionario</a>"
+            <a href="cadastrarFuncionario.php">Cadastrar Funcionario</a>
 
             <?php endif ?>
             
