@@ -5,11 +5,22 @@ require_once('../model/Classes/Vitima.php');
 
 session_start();
 
+
 if (!isset($_SESSION['usuario_logado'])) {
-    header('location: loginUsuario.php');
+    header('location: login.php');
     exit;
 }
-$tipo_usuario = $_SESSION['tipo_usuario'];
+
+
+$tipo_usuario = $_SESSION['tipo_usuario'] ?? 'Não Autorizado'; 
+
+
+if ($tipo_usuario !== 'Administrador') {
+
+    header('location: home.php'); 
+    exit;
+}
+
 
 $listaVitimas = $_SESSION['lista_vitimas'] ?? [];
 
@@ -19,12 +30,12 @@ $mensagem = '';
 $tipo_mensagem = ''; 
 
 if (isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
-    $mensagem = $_SESSION['msg'];
+     $mensagem = $_SESSION['msg'];
     if (isset($_SESSION['tipo'])) {
-        $tipo_mensagem = $_SESSION['tipo'];
+         $tipo_mensagem = $_SESSION['tipo'];
         unset($_SESSION['tipo']); 
-    }
-    unset($_SESSION['msg']);
+ }
+ unset($_SESSION['msg']);
 }
 
 $temResultados = !empty($listaVitimas);
@@ -34,10 +45,11 @@ $temResultados = !empty($listaVitimas);
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../styles/consulta.css">
-    <link rel="icon" href="../img/lupa.png">
-    <title>Consulta Vitimas</title>
+ <meta charset="UTF-8">
+ <link rel="stylesheet" href="../styles/style.css">
+ <link rel="stylesheet" href="../styles/consultaVitima.css">
+ <link rel="icon" href="../img/lupa.png">
+ <title>Consulta Vitimas</title>
 
 </head>
 
@@ -70,7 +82,7 @@ $temResultados = !empty($listaVitimas);
                         <li><a href="../controller/ConsultarVitimasController.php">Consultar Vitimas</a></li>
                         <br><br><br>
 
-                        <li><a href="../controller/logoutController.php">Sair</a></li>
+                        <li><a href="Logout.php">Sair</a></li>
 
 
                     </ul>
