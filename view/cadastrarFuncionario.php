@@ -21,7 +21,7 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -50,7 +50,7 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
     <main>
         <nav>
             <a href="admDashboard.php">Dashboard</a>
-            <a href="">Consultar Vitimas</a>
+            <a href="consultarVitima.php">Consultar Vitimas</a>
             <a href="cadastrarFuncionario.php">Cadastrar Funcionario</a>
         </nav>
 

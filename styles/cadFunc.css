@@ -16,7 +16,6 @@ body {
     --bg-card: #fff;
 
     background-color: var(--bg-page);
-    padding-bottom: 50px; 
     min-height: 100vh;
 }
 
@@ -174,7 +173,6 @@ footer {
     background-color: var(--color-primary);
     color: #fff;
     padding: 15px 0;
-    position: fixed;
     bottom: 0;
     width: 100%;
 }
