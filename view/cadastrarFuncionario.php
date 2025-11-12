@@ -21,14 +21,13 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Usuario</title>
-    <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="../styles/forms.css">
+    <link rel="stylesheet" href="../styles/cadFunc.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
@@ -39,23 +38,20 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
         <h1>Projeto Acolhimento</h1>
         <p>Apoio e conscientização contra a violência doméstica</p>
 
-        <div class="menu-boas-vindas">
-            <p>Bem-vinda! ** <?= $username ?> **</p>
+        <div class="botoes">
+            <div class="menu-contato">
+            <a href="../index.php" class="botao">Home</a>
         </div>
-
         <div class="menu_logout">
             <a href="../controller/logoutController.php" class="botao">Logout</a>      
         </div>
-
-        <div class="menu-contato">
-            <a href="../index.php" class="botao">Home</a>
         </div>
     </header>
     <main>
         <nav>
             <a href="admDashboard.php">Dashboard</a>
-            <a href="">Consultar Vitimas</a>
-            <a href="cadastrarFuncionario.php">Cadsastrar Funcionario</a>
+            <a href="consultarVitima.php">Consultar Vitimas</a>
+            <a href="cadastrarFuncionario.php">Cadastrar Funcionario</a>
         </nav>
 
         <form action="../controller/FuncionarioController.php" method="POST">
