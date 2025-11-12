@@ -31,14 +31,14 @@ class VoluntarioDao
         $areasCsv        = $v->getAreas();
 
         if (!$stmt->bind_param('sssss', $nome, $email, $telefone, $disponibilidade, $areasCsv)) {
-            if (session_status() === PHP_SESSION_NONE) { @session_start(); }
+            
             $_SESSION['msg'] = "Falha ao vincular parâmetros. Erro: " . $stmt->error;
             $stmt->close();
             return false;
         }
 
         if (!$stmt->execute()) {
-            if (session_status() === PHP_SESSION_NONE) { @session_start(); }
+            
             $_SESSION['msg'] = "Falha ao inserir voluntário. Erro: " . $stmt->error;
             $stmt->close();
             return false;
@@ -83,5 +83,23 @@ class VoluntarioDao
         $stmt->close();
 
         return $existe;
+    }
+
+    public function contarTotalVoluntarios()
+    {
+        $sql = 'SELECT COUNT(idVoluntario) AS total_voluntarios FROM voluntario;';
+
+        if ($stmt = $this->conexao->prepare($sql)) {
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+
+            if ($linha = $resultado->fetch_assoc()) {
+                $total_voluntatios = $linha['total_voluntarios'];
+            } else {
+                $total_voluntatios = 0;
+            }
+            $stmt->close();
+            return $total_voluntatios;
+        }
     }
 }

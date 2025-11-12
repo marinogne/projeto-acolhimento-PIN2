@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../classes/Vitima.php';
-require_once __DIR__ . '/ConexaoBanco.php'; 
+require_once __DIR__ . '/ConexaoBanco.php';
 
 class VitimaDao
 {
@@ -23,15 +23,15 @@ class VitimaDao
             error_log("DAO - Falha na Preparação da Consulta: " . $this->conexao->error);
             return false;
         } else {
-            $id_cidadao          = $vitima->getIdCidadao();
-            $etnia               = $vitima->getEtnia();
-            $possui_renda        = $vitima->getPossuiRenda();
-            $recebe_auxilio      = $vitima->getRecebeAuxilio();
-            $trabalha            = $vitima->getTrabalha();
-            $escolaridade        = $vitima->getEscolaridade();
-            $possui_filhos       = $vitima->getPossuiFilhos();
-            $qtd_filhos_menores  = $vitima->getQtdFilhosMenores();
-            $nome_mae            = $vitima->getNomeMae();
+            $id_cidadao = $vitima->getIdCidadao();
+            $etnia = $vitima->getEtnia();
+            $possui_renda = $vitima->getPossuiRenda();
+            $recebe_auxilio = $vitima->getRecebeAuxilio();
+            $trabalha = $vitima->getTrabalha();
+            $escolaridade = $vitima->getEscolaridade();
+            $possui_filhos = $vitima->getPossuiFilhos();
+            $qtd_filhos_menores = $vitima->getQtdFilhosMenores();
+            $nome_mae = $vitima->getNomeMae();
 
             $stmt->bind_param('issssssis', $id_cidadao, $etnia, $possui_renda, $recebe_auxilio, $trabalha, $escolaridade, $possui_filhos, $qtd_filhos_menores, $nome_mae);
 
@@ -46,6 +46,56 @@ class VitimaDao
         }
     }
 
+    public function atualizarVitima($vitima)
+    {
+        $sql = "UPDATE vitima SET 
+            etnia = ?,
+            possui_renda = ?,
+            recebe_auxilio = ?,
+            trabalha = ?,
+            escolaridade = ?,
+            possui_filhos = ?,
+            qtd_filhos_menores = ?,
+            nome_mae = ?
+            WHERE id_cidadao = ?";
+
+        if ($stmt = $this->conexao->prepare($sql)) {
+
+            $etnia = $vitima->getEtnia();
+            $possui_renda = $vitima->getPossuiRenda();
+            $recebe_auxilio = $vitima->getRecebeAuxilio();
+            $trabalha = $vitima->getTrabalha();
+            $escolaridade = $vitima->getEscolaridade();
+            $possui_filhos = $vitima->getPossuiFilhos();
+            $qtd_filhos_menores = $vitima->getQtdFilhosMenores();
+            $nome_mae = $vitima->getNomeMae();
+            $id_cidadao = $vitima->getIdCidadao();
+
+            $stmt->bind_param(
+                'ssssssisi',
+                $etnia,
+                $possui_renda,
+                $recebe_auxilio,
+                $trabalha,
+                $escolaridade,
+                $possui_filhos,
+                $qtd_filhos_menores,
+                $nome_mae,
+                $id_cidadao
+            );
+
+            if ($stmt->execute()) {
+                $stmt->close();
+                return true;
+            } else {
+
+                $stmt->close();
+                return false;
+            }
+        }
+
+        return false;
+    }
     public function listarVitimasCompleto(): array
     {
         $sql = "
@@ -76,20 +126,20 @@ class VitimaDao
             $res = $stmt->get_result();
             while ($row = $res->fetch_assoc()) {
                 $lista[] = [
-                    'id_cidadao'         => $row['id_cidadao'],
-                    'nome'               => $row['nome'],
-                    'cpf'                => $row['cpf'],
-                    'data_nascimento'    => $row['data_nascimento'],
-                    'telefone'           => $row['telefone'],
-                    'endereco'           => $row['endereco'],
-                    'id_login'           => $row['id_login'],
-                    'etnia'              => $row['etnia'],
-                    'possui_renda'       => $row['possui_renda'],
-                    'recebe_auxilio'     => $row['recebe_auxilio'],
-                    'trabalha'           => $row['trabalha'],
-                    'escolaridade'       => $row['escolaridade'],
-                    'nome_mae'           => $row['nome_mae'],
-                    'possui_filhos'      => $row['possui_filhos'],
+                    'id_cidadao' => $row['id_cidadao'],
+                    'nome' => $row['nome'],
+                    'cpf' => $row['cpf'],
+                    'data_nascimento' => $row['data_nascimento'],
+                    'telefone' => $row['telefone'],
+                    'endereco' => $row['endereco'],
+                    'id_login' => $row['id_login'],
+                    'etnia' => $row['etnia'],
+                    'possui_renda' => $row['possui_renda'],
+                    'recebe_auxilio' => $row['recebe_auxilio'],
+                    'trabalha' => $row['trabalha'],
+                    'escolaridade' => $row['escolaridade'],
+                    'nome_mae' => $row['nome_mae'],
+                    'possui_filhos' => $row['possui_filhos'],
                     'qtd_filhos_menores' => $row['qtd_filhos_menores'],
                 ];
             }

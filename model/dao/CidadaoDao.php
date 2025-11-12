@@ -100,7 +100,7 @@ class CidadaoDao
             $resultado = $stmt->get_result();
 
             $id_cidadao = null;
-            if($resultado->num_rows > 0){
+            if ($resultado->num_rows > 0) {
                 $id_cidadao = $resultado->fetch_assoc();
             }
             $stmt->close();
@@ -117,7 +117,7 @@ class CidadaoDao
             $stmt->execute();
             $resultado = $stmt->get_result();
 
-            if(($resultado->num_rows > 0)){
+            if (($resultado->num_rows > 0)) {
                 $cidadao = $resultado->fetch_assoc();
             }
             $stmt->close();
@@ -125,8 +125,24 @@ class CidadaoDao
         }
         return false;
     }
+    public function consultarCidadaoPorID($id_cidadao)
+    {
+        $sql = "SELECT * FROM cidadao WHERE id_cidadao = ?";
+        if ($stmt = $this->conexao->prepare($sql)) {
+            $stmt->bind_param('i', $id_cidadao);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
 
-    public function atualizarCidaddao($cidadao){
+            if (($resultado->num_rows > 0)) {
+                $cidadao = $resultado->fetch_assoc();
+            }
+            $stmt->close();
+            return $cidadao;
+        }
+        return false;
+    }
+    public function atualizarCidaddao($cidadao)
+    {
         $sql = "UPDATE cidadao SET 
         nome = ?,
         cpf = ?,
@@ -134,34 +150,53 @@ class CidadaoDao
         telefone = ?,
         endereco = ? 
          WHERE id_login = ? ";
-    
-        if ($stmt = $this->conexao->prepare($sql)) {
-            
-            $nome       = $cidadao->getNome();
-            $cpf        = $cidadao->getCpf();
-            $data_nasci = $cidadao->getDataNascimento();
-            $telefone   = $cidadao->getTelefone();
-            $endereco   = $cidadao->getEndereco();
-            $id_login   = $cidadao->getIdLogin();
 
-            $stmt->bind_param('sssssi', 
-                $nome, 
-                $cpf, 
-                $data_nasci, 
-                $telefone, 
-                $endereco, 
+        if ($stmt = $this->conexao->prepare($sql)) {
+
+            $nome = $cidadao->getNome();
+            $cpf = $cidadao->getCpf();
+            $data_nasci = $cidadao->getDataNascimento();
+            $telefone = $cidadao->getTelefone();
+            $endereco = $cidadao->getEndereco();
+            $id_login = $cidadao->getIdLogin();
+
+            $stmt->bind_param(
+                'sssssi',
+                $nome,
+                $cpf,
+                $data_nasci,
+                $telefone,
+                $endereco,
                 $id_login
             );
-        
+
             if ($stmt->execute()) {
                 $stmt->close();
-                return true; 
+                return true;
             } else {
                 $stmt->close();
-                return false; 
+                return false;
             }
         }
-        return false; 
+        return false;
     }
 
+
+    public function contarTotalCidadaos()
+    {
+        $sql = 'SELECT COUNT(id_cidadao) AS total_vitimas FROM cidadao';
+
+        if ($stmt = $this->conexao->prepare($sql)) {
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+
+            if ($linha = $resultado->fetch_assoc()) {
+                $total_vitimas = $linha['total_vitimas'];
+            } else {
+                $total_vitimas = 0;
+            }
+            $stmt->close();
+            return $total_vitimas;
+        }
+    }
 }

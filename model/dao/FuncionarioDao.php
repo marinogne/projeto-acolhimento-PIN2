@@ -30,7 +30,7 @@ class FuncionarioDao
             $cargo = $funcionario->getCargo();
             $id_login = $funcionario->getIdLogin();
 
-            $stmt->bind_param('ssssi', $nome,$cpf,$matricula,$cargo,$id_login);
+            $stmt->bind_param('ssssi', $nome, $cpf, $matricula, $cargo, $id_login);
 
             if ($stmt->execute() === false) {
                 $msg = $stmt->error;
@@ -44,22 +44,40 @@ class FuncionarioDao
                 return $id_funcionario;
             }
         }
-    } 
-
-    public function verificarDuplicidade($matricula, $cpf) {
-    $sql = "SELECT idFuncionario FROM funcionario WHERE matricula = ? OR cpf = ?";
-    
-    if ($stmt = $this->conexao->prepare($sql)) {
-        $stmt->bind_param('ss', $matricula, $cpf);
-        $stmt->execute();
-        $stmt->store_result();
-        
-        $existe = $stmt->num_rows > 0;
-        
-        $stmt->close();
-        return $existe;
     }
-    return false; 
-}
 
+    public function verificarDuplicidade($matricula, $cpf)
+    {
+        $sql = "SELECT idFuncionario FROM funcionario WHERE matricula = ? OR cpf = ?";
+
+        if ($stmt = $this->conexao->prepare($sql)) {
+            $stmt->bind_param('ss', $matricula, $cpf);
+            $stmt->execute();
+            $stmt->store_result();
+
+            $existe = $stmt->num_rows > 0;
+
+            $stmt->close();
+            return $existe;
+        }
+        return false;
+    }
+
+    public function contarTotalFuncionarios()
+    {
+        $sql = 'SELECT COUNT(idFuncionario) AS total_funcionarios FROM funcionario';
+
+        if ($stmt = $this->conexao->prepare($sql)) {
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+
+            if ($linha = $resultado->fetch_assoc()) {
+                $total_funcionarios = $linha['total_funcionarios'];
+            } else {
+                $total_funcionarios = 0;
+            }
+            $stmt->close();
+            return $total_funcionarios;
+        }
+    }
 }

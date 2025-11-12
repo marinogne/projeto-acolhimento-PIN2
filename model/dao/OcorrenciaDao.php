@@ -101,4 +101,44 @@ class OcorrenciaDao
         }
         return false;
     }
+
+    public function contarTotalOcorrencias()
+    {
+        $sql = 'SELECT COUNT(id_ocorrencia) AS total_ocorrencias FROM ocorrencia';
+
+        if ($stmt = $this->conexao->prepare($sql)) {
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+
+            if ($linha = $resultado->fetch_assoc()) {
+                $total_ocorrencias = $linha['total_ocorrencias'];
+            } else {
+                $total_ocorrencias = 0;
+            }
+            $stmt->close();
+            return $total_ocorrencias;
+        }
+    }
+
+    public function contarTiposViolencia() {
+    // Esta query agrupa e conta o total de ocorrências para cada tipo registrado
+    // Assumindo que 'tipo_violencia' é a coluna que você usa.
+    $sql = "SELECT tipo_violencia, COUNT(*) AS total FROM ocorrencia GROUP BY tipo_violencia ORDER BY total DESC";
+    
+    if ($stmt = $this->conexao->prepare($sql)) {
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        
+        $dados = [];
+        while ($linha = $resultado->fetch_assoc()) {
+            // Adiciona cada linha (Tipo e Total) ao array
+            $dados[] = $linha; 
+        }
+        
+        $stmt->close();
+        return $dados; // Retorna um array de arrays (ex: [{'tipo_violencia':'Física', 'total': 10}, ...])
+    }
+    
+    return []; // Retorna um array vazio em caso de falha
+}
 }

@@ -38,13 +38,13 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
         <h1>Projeto Acolhimento</h1>
         <p>Apoio e conscientização contra a violência doméstica</p>
 
-
+        <div class="botoes">
+            <div class="menu-contato">
+            <a href="../index.php" class="botao">Home</a>
+        </div>
         <div class="menu_logout">
             <a href="../controller/logoutController.php" class="botao">Logout</a>      
         </div>
-
-        <div class="menu-contato">
-            <a href="../index.php" class="botao">Home</a>
         </div>
     </header>
     <main>

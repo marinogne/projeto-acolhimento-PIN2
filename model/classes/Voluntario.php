@@ -6,7 +6,7 @@ class Voluntario {
     protected $email;
     protected $telefone;
     protected $disponibilidade;
-    protected $areas;
+    protected $areasCsv;
 
     public function __construct($idVoluntario, $nome, $email, $telefone, $disponibilidade, $areasCsv){
         $this->setIdVoluntario($idVoluntario);
@@ -34,6 +34,6 @@ class Voluntario {
     public function getDisponibilidade(){ return $this->disponibilidade; }
     public function setDisponibilidade($disponibilidade){ $this->disponibilidade = $disponibilidade; return $this; }
 
-    public function getAreas(){ return $this->areas; }                 
-    public function setAreas($areasCsv){ $this->areas = $areasCsv; return $this; }
+    public function getAreas(){ return $this->areasCsv; }                 
+    public function setAreas($areasCsv){ $this->areasCsv = $areasCsv; return $this; }
 }

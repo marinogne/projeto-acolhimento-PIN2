@@ -73,7 +73,7 @@ table.tabela thead th {
   background-color: #D9C5E3;
   color: #7C4D9E;
   padding: 12px 10px;
-  text-align: left;
+  text-align: center;
   font-weight: 900;
   border-bottom: 2px solid #E9E1EE;
   white-space: nowrap;
@@ -88,6 +88,7 @@ table.tabela tbody td {
   vertical-align: top;
   white-space: normal;
   word-break: break-word;
+  text-align: center;
 }
 
 table.tabela tbody tr:nth-child(odd)  { background-color: #FCFAFE; }
