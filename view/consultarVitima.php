@@ -21,7 +21,6 @@ $tipo = $_SESSION['tipo'] ?? null;
 
 unset($_SESSION['lista_vitimas'], $_SESSION['msg'], $_SESSION['tipo']);
 
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
