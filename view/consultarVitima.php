@@ -1,14 +1,24 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['logado'])) {
-  header('location: ../index.php');
-  exit;
+
+if (!isset($_SESSION['usuario_logado'])) {
+    header('location: login.php');
+    exit;
 }
-if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === "Vitima") {
-  header('location: ../index.php');
-  exit;
+
+
+$tipo_usuario = $_SESSION['tipo_usuario'] ?? 'Não Autorizado'; 
+
+
+if ($tipo_usuario !== 'Administrador') {
+
+    header('location: home.php'); 
+    exit;
 }
+
+
+$listaVitimas = $_SESSION['lista_vitimas'] ?? [];
 
 if (!isset($_SESSION['lista_vitimas'])) {
   header('location: ../controller/ConsultarVitimasController.php');
