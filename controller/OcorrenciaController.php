@@ -141,9 +141,13 @@ if (isset($_SESSION['userid'])) {
 
         if ($ocorrenciaDao->inserirOcorrencia($ocorrencia)) {
             $_SESSION['msg'] = "Nova Ocorrencia cadastrada com sucesso.";
-            header('location: ../view/consultarocorrencia.php');
+            header('location: ../view/novaOcorrencia.php');
             exit();
-
+        }
+        else{
+            $_SESSION['msg'] = "Não foi possivel cadastrar nova ocorrencia, tente novamente mais tarde ou contate o suporte!";
+            header('location: ../view/novaOcorrencia.php');
+            exit();
         }
 
     }
