@@ -43,9 +43,11 @@ class AgressorDao
     }
 
     public function consultarAgressor($agressor){
+        $nome = $agressor->getNome();
+
         $sql = "SELECT * FROM agressor WHERE nome = ?";
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bind_param('s',$agressor->getNome());
+        $stmt->bind_param('s',$nome);
         $stmt->execute();
         $stmt->store_result();
 
@@ -53,7 +55,7 @@ class AgressorDao
                 $id_agressor = 0;
                 $stmt->bind_result($id_agressor,$nome,$endereco);
                 if($stmt->fetch()){
-                    $agressor->setIdCidadao($id_agressor);
+                    $agressor->setIdAgressor($id_agressor);
                     $agressor->setNome($nome);
                     $agressor->setEndereco($endereco);
                     $stmt->close();

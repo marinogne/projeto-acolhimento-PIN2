@@ -82,7 +82,6 @@ $qtd_filhos_menores = $vitima_completa["qtd_filhos_menores"];
             <a href="consultarCadastro.php">Exibir Cadastro Pessoal</a>
             <a href="consultarOcorrencia.php">Consultar Ocorrencia</a>
             <a href="novaOcorrencia.php">Nova Ocorrencia</a>
-            <a href="">Excluir Cadastro </a>
         </nav>
         <div>
             <form action="../controller/VitimaController.php" method="POST">

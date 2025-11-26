@@ -75,7 +75,6 @@ if(isset($_SESSION['ocorrencia-final']) && $_SESSION['ocorrencia-final'] !== nul
                         <a href="consultarCadastro.php">Exibir Cadastro Pessoal</a>
                         <a href="consultarOcorrencia.php">Consultar Ocorrencia</a>
                         <a href="novaOcorrencia.php">Nova Ocorrencia</a>
-                        <a href="">Excluir Cadastro </a>
                 </nav>
 
                 <form action="../controller/OcorrenciaController.php" method="POST">

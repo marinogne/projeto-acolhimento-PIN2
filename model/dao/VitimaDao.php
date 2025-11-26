@@ -103,7 +103,7 @@ class VitimaDao
                 c.id_cidadao               AS id_cidadao,
                 c.nome                     AS nome,
                 c.cpf                      AS cpf,
-                c.data_nasci               AS data_nascimento,  -- <— aqui!
+                c.data_nasci               AS data_nascimento,
                 c.telefone                 AS telefone,
                 c.endereco                 AS endereco,
                 c.id_login                 AS id_login,
@@ -155,7 +155,7 @@ class VitimaDao
                 c.id_cidadao               AS id_cidadao,
                 c.nome                     AS nome,
                 c.cpf                      AS cpf,
-                c.data_nasci               AS data_nascimento,  -- <— aqui também!
+                c.data_nasci               AS data_nascimento,
                 c.telefone                 AS telefone,
                 c.endereco                 AS endereco,
                 c.id_login                 AS id_login,
