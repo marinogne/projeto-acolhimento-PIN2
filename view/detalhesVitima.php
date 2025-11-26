@@ -83,7 +83,7 @@ if (isset($_SESSION['ocorrencia-final']) && $_SESSION['ocorrencia-final'] !== nu
         </div>
 
         <div>
-            <form action="../controller/DetalhesVitimaController.php" method="GET">
+            <form action="" method="GET">
                 <?php if ($mensagem)
                     echo "<p style='color:red;'>$mensagem</p>"; ?>
                 <h2>Ficha de Cadastro</h2>
@@ -193,7 +193,7 @@ if (isset($_SESSION['ocorrencia-final']) && $_SESSION['ocorrencia-final'] !== nu
             </form><br>
         
 
-        <form action="../controller/DetalhesVitimaController.php" method="POST">
+        <form action="" method="POST">
 
             <div class="form-group">
                 <label for="">Quantidade de Ocorrencias Localizadas:
