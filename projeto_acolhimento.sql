@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 30/10/2025 às 19:46
+-- Tempo de geração: 09/12/2025 às 16:34
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -50,7 +50,9 @@ CREATE TABLE `agressor` (
 INSERT INTO `agressor` (`id_agressor`, `nome`, `endereco`) VALUES
 (2, 'Pedro Teste 50', 'Rua Teste Agressor, 50'),
 (3, 'João Pedro de Oliveira', 'Rua das Palmeiras, 70, Bairro Novo, São Paulo/SP  Exportar para as Planilhas'),
-(5, 'Safado', 'rua dos trouxa');
+(5, 'Safado', 'rua dos trouxa'),
+(7, 'Novo Agressor', 'Novo Endereço'),
+(8, 'nova ocorrencia teste', 'teste');
 
 -- --------------------------------------------------------
 
@@ -73,7 +75,7 @@ CREATE TABLE `cidadao` (
 --
 
 INSERT INTO `cidadao` (`id_cidadao`, `nome`, `cpf`, `data_nasci`, `telefone`, `endereco`, `id_login`) VALUES
-(4, 'Maria Mary Maria', '12345678901', '1985-01-15', '1135353535', 'Rua Teste Vitima, 100', 1),
+(4, 'Maria da Cunha', '12345678901', '1985-01-15', '1135353535', 'Rua Teste Vitima, 100', 1),
 (5, 'Ana Lúcia da Silva', '45678912300', '1985-05-20', '11987654321', 'Rua dos Ipês, 150, Centro, São Paulo/SP', 5),
 (8, 'Duna Atreides', '11122233344', '2012-03-03', '11555554444', 'Palmas 107', 7);
 
@@ -129,7 +131,9 @@ INSERT INTO `ocorrencia` (`id_ocorrencia`, `id_vitima`, `id_agressor`, `relacao_
 (1, 4, 2, 'Ex-marido', '10 anos', 'fisica,verbal,psicologica', 'sim', 'Detalhes do Teste', 'Sim_Filhos', 'nao', 'Solicitada', 'nao'),
 (2, 5, 3, 'Ex-Companheiro', '5 anos', 'psicologica,sexual', 'nao', 'Agressão física ocorreu após discussão sobre finanças. Ameaças são constantes.', 'sim_outros', 'sim', 'nao', 'sim'),
 (4, 8, 5, 'namorado', '2 meses', 'verbal,psicologica', 'nao', '', 'sim_outros', 'nao', 'sim', 'nao_sei'),
-(5, 4, 2, 'teste', '2 anos', 'fisica,verbal', 'sim', 'Detalhes do Teste', 'Sim_Filhos', 'nao', 'Solicitada', 'nao');
+(5, 4, 2, 'teste', '2 anos', 'fisica,verbal', 'sim', 'Detalhes do Teste', 'Sim_Filhos', 'nao', 'Solicitada', 'nao'),
+(9, 4, 7, 'Agressor', 'novo', 'fisica,verbal,psicologica,moral,sexual,patrimonial', 'sim', 'nova agressão', 'sim_filhos', 'sim', 'sim', 'sim'),
+(10, 8, 8, 'teste', 'teste', 'fisica,verbal,psicologica,moral,sexual,patrimonial', 'sim', 'teste', 'sim_filhos', 'sim', 'sim', 'sim');
 
 -- --------------------------------------------------------
 
@@ -149,11 +153,12 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `usuario`, `senha`, `tipo_usuario`) VALUES
-(1, 'teste', '$2y$10$DkODJnUvl0qlNl3SMpxfdu4yZ1pGC5B.bZWI7wQ7G0l0LM0dZi9Ve', 'Vitima'),
-(5, 'teste5', '$2y$10$1mLOoCUGfyFA3X0VYxxBDeRchpfQr6ACAopTSJyXEA7Tivk/0nPyC', 'Vitima'),
-(7, 'teste2', '$2y$10$da14Hu1pZ3L0XtVj2D/32eWIIgK21qpbdMSlxsro8BIp95fVjTLrm', 'Vitima'),
-(8, 'IFSP', '$2y$10$ORX51A6vR2qHJCvIwl.dE.OG3.RlmKQ/xdtsz7srXzUhNvqZaoume', 'Funcionario'),
-(9, 'admin', '$2y$10$OqQkk9QDqntDe4TwSzYAm.MSaWFWMicHvgYi40IbtNC.Jp1R5Z6ma', 'Administrador');
+(1, 'vitima', '$2y$10$DkODJnUvl0qlNl3SMpxfdu4yZ1pGC5B.bZWI7wQ7G0l0LM0dZi9Ve', 'Vitima'),
+(5, 'vitima2', '$2y$10$1mLOoCUGfyFA3X0VYxxBDeRchpfQr6ACAopTSJyXEA7Tivk/0nPyC', 'Vitima'),
+(7, 'vitima3', '$2y$10$da14Hu1pZ3L0XtVj2D/32eWIIgK21qpbdMSlxsro8BIp95fVjTLrm', 'Vitima'),
+(8, 'funcionario', '$2y$10$ORX51A6vR2qHJCvIwl.dE.OG3.RlmKQ/xdtsz7srXzUhNvqZaoume', 'Funcionario'),
+(9, 'admin', '$2y$10$OqQkk9QDqntDe4TwSzYAm.MSaWFWMicHvgYi40IbtNC.Jp1R5Z6ma', 'Administrador'),
+(10, 'vitima4', '$2y$10$awzjBgL62GTdldBlq7Pfnu2HAvHVVNh/OA3r18h61bURUyx8FNqNy', 'Vitima');
 
 -- --------------------------------------------------------
 
@@ -178,7 +183,7 @@ CREATE TABLE `vitima` (
 --
 
 INSERT INTO `vitima` (`id_cidadao`, `etnia`, `possui_renda`, `recebe_auxilio`, `trabalha`, `escolaridade`, `possui_filhos`, `qtd_filhos_menores`, `nome_mae`) VALUES
-(4, '', 'nao', 'nao', 'nao', 'fundamental_incompleto', 'sim', 11, 'Mãe da Maria'),
+(4, 'preta', 'nao', 'nao', 'nao', 'medio_incompleto', 'sim', 11, 'Mãe da Maria'),
 (5, 'parda', 'sim', 'nao', 'sim', 'medio_completo', 'sim', 2, 'Maria das Dores Silva'),
 (8, 'indigena', 'nao', 'nao', 'nao', 'pos_graduacao', 'nao', 0, 'Doguinha Dog');
 
@@ -190,9 +195,20 @@ INSERT INTO `vitima` (`id_cidadao`, `etnia`, `possui_renda`, `recebe_auxilio`, `
 
 CREATE TABLE `voluntario` (
   `idVoluntario` int(20) NOT NULL,
-  `servicoPrestado` int(11) NOT NULL,
-  `dataInscricao` int(11) NOT NULL
+  `nome` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `telefone` varchar(20) NOT NULL,
+  `disponibilidade` varchar(20) NOT NULL,
+  `areas` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `voluntario`
+--
+
+INSERT INTO `voluntario` (`idVoluntario`, `nome`, `email`, `telefone`, `disponibilidade`, `areas`) VALUES
+(1, 'teste', 'teste@teste.gmail.com', '11999955555', 'Tarde', 'Apoio psicológico,Atendimento'),
+(2, 'teste', 'teste4@gmail.com', '123', 'Fins de semana', 'Apoio jurídico,Divulgação');
 
 --
 -- Índices para tabelas despejadas
@@ -260,7 +276,7 @@ ALTER TABLE `voluntario`
 -- AUTO_INCREMENT de tabela `agressor`
 --
 ALTER TABLE `agressor`
-  MODIFY `id_agressor` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_agressor` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `cidadao`
@@ -278,13 +294,19 @@ ALTER TABLE `funcionario`
 -- AUTO_INCREMENT de tabela `ocorrencia`
 --
 ALTER TABLE `ocorrencia`
-  MODIFY `id_ocorrencia` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_ocorrencia` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_usuario` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de tabela `voluntario`
+--
+ALTER TABLE `voluntario`
+  MODIFY `idVoluntario` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restrições para tabelas despejadas
